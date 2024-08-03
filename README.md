@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animated Letter</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Le+Fointe&display=swap" rel="stylesheet">
     <style>
         body {
             display: flex;
@@ -23,35 +23,37 @@
             border: 2px solid #ccc;
             border-radius: 10px;
             overflow: hidden;
-            transition: transform 1s;
             cursor: pointer;
         }
 
-        .envelope::before, .envelope::after {
-            content: '';
+        .top-flap {
             position: absolute;
-            width: 300px;
-            height: 100px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: #fff;
+            border: 2px solid #ccc;
+            border-bottom: 0;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            transform-origin: bottom;
+            transition: transform 1s;
+        }
+
+        .bottom-flap {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
             background: #fff;
             border: 2px solid #ccc;
             border-top: 0;
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
-            transition: transform 1s;
-        }
-
-        .envelope::before {
-            top: 0;
-            left: 0;
-            transform-origin: bottom;
-            transform: rotateX(0deg);
-        }
-
-        .envelope::after {
-            bottom: 0;
-            left: 0;
             transform-origin: top;
-            transform: rotateX(0deg);
+            transition: transform 1s;
         }
 
         .letter {
@@ -61,7 +63,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            font-family: 'Great Vibes', cursive;
+            font-family: 'Le Fointe', cursive;
             font-size: 24px;
             opacity: 0;
         }
@@ -69,7 +71,7 @@
         .letter span {
             display: inline-block;
             opacity: 0;
-            animation: fadeIn 0.5s forwards;
+            animation: fadeIn 1s forwards;
         }
 
         @keyframes fadeIn {
@@ -85,25 +87,29 @@
 <body>
 
 <div class="envelope" onclick="openEnvelope()">
+    <div class="top-flap"></div>
+    <div class="bottom-flap"></div>
     <div class="letter" id="letter">
-        <span>Y</span><span>O</span><span>U</span> <span>M</span><span>A</span><span>D</span><span>E</span> <span>M</span><span>E</span> <span>T</span><span>H</span><span>E</span> <span>H</span><span>A</span><span>P</span><span>P</span><span>I</span><span>E</span><span>S</span><span>T</span> <span>P</span><span>E</span><span>R</span><span>S</span><span>O</span><span>N</span> <span>I</span><span>'</span><span>V</span><span>E</span> <span>E</span><span>V</span><span>E</span><span>R</span> <span>B</span><span>E</span><span>E</span><span>N</span>.
+        <span>You made me the happiest person</span><br>
+        <span>I've ever been.</span>
     </div>
 </div>
 
 <script>
     function openEnvelope() {
-        const envelope = document.querySelector('.envelope');
+        const topFlap = document.querySelector('.top-flap');
+        const bottomFlap = document.querySelector('.bottom-flap');
         const letter = document.getElementById('letter');
-        envelope.style.transform = 'rotateX(180deg)';
-        envelope.style.zIndex = '1';
-        envelope::before.style.transform = 'rotateX(180deg)';
-        envelope::after.style.transform = 'rotateX(180deg)';
+        
+        topFlap.style.transform = 'rotateX(180deg)';
+        bottomFlap.style.transform = 'rotateX(-180deg)';
+        
         setTimeout(() => {
             letter.style.display = 'block';
             letter.style.opacity = '1';
             const spans = letter.querySelectorAll('span');
             spans.forEach((span, index) => {
-                span.style.animationDelay = `${index * 0.1}s`;
+                span.style.animationDelay = `${index * 1}s`;
             });
         }, 1000);
     }
